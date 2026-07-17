@@ -1,11 +1,9 @@
-[org 0x00]
+[org 0x7c00]
 [bits 16]
  
 section .code
  
 .init:
-    mov eax, 0x07c0
-    mov ds, eax
     mov eax, 0xb800
     mov es, eax
     mov eax, 0
@@ -21,13 +19,12 @@ section .code
     cmp eax, 2 * 25 * 80
     jl .clear
  
-    mov eax, .welcome
-    mov ecx, 0 * 2 * 80
-    push .end
-    call .print
+mov eax, welcome
+mov ecx, 0 * 2 * 80
+call .print
+
+jmp .switch
  
-.end:
-    jmp $
  
 .print:
     mov ebx, 0
@@ -43,9 +40,60 @@ section .code
  
 .print_end:
     ret
+
+.switch:
+    cli ; turn of interrupts
+    lgdt [gdt_descriptor] ; load gdt table
+
+    mov eax, cr0
+    or eax, 0x1
+    mov cr0, eax ; make a switch to protected mode
+
+    jmp protected_start
  
-.welcome: db 'Welcome to SaphireOS.', 0
+welcome: db 'Welcome to SaphireOS.', 0
  
+[bits 32]
+protected_start:
+    mov ax, data_seg ; data_seg is defined in gdt table
+    mov ds, ax
+    mov ss, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    ; update the stack pointer
+    mov ebp, 0x90000
+    mov esp, ebp
+
+    jmp $
+
+gdt_begin:
+gdt_null_descriptor:
+    dd 0x00
+    dd 0x00
+gdt_code_seg:
+    dw 0xffff
+    dw 0x00
+    db 0x00
+    db 10011010b
+    db 11001111b
+    db 0x00
+gdt_data_seg:
+    dw 0xffff
+    dw 0x00
+    db 0x00
+    db 10010010b
+    db 11001111b
+    db 0x00
+gdt_end:
+gdt_descriptor:
+    dw gdt_end - gdt_begin - 1
+    dd gdt_begin
+
+code_segment equ gdt_code_seg - gdt_begin
+data_seg equ gdt_data_seg - gdt_begin
+
 times 510 - ($ - $$) db 0x00
 db 0x55
 db 0xaa
