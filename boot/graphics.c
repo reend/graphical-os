@@ -40,20 +40,20 @@ void DrawRect(int x, int y, int width, int height, int r, int g, int b)
     }
 }
 
-void DrawCharacter() 
+void DrawCharacter(int (*f)(int, int), int font_width, int font_height, char character, int x, int y, int r, int g, int b)
 {
-    for (int y = 0; y < font_arial_height; y++)
+    for (int j = 0; j < font_height; j++)
     {
-        unsigned int row = getArialCharacter((int)('A'), y);
-        int shift = font_arial_width - 1;
+        unsigned int row = (*f)(character, j);
+        int shift = font_width - 1;
         int bit_val = 0;
 
-        for (int x = 0; x < font_arial_width; x++)
+        for (int i = 0; i < font_width; i++)
         {
             bit_val = (row >> shift) & 0x1;
             if (bit_val == 1)
             {
-                Draw(x, y, 255, 255, 255);
+                Draw(x + i, y + j, r, g, b);
             }
 
             shift -= 1;
