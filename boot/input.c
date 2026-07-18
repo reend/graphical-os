@@ -190,6 +190,8 @@ void HandleMouseInterrupt() {
 }
 
 void HandleMousePacket() {
+    VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
+
     uint8_t status = bytes[0];
     int32_t change_x = (int32_t) bytes[1];
     int32_t change_y = (int32_t) bytes[2];
@@ -211,5 +213,8 @@ void HandleMousePacket() {
     y -= change_y * mouse_speed;
 
     if (x < 0) x = 0;
+    else if (x > VBE->x_resolution) x = VBE->x_resolution;
+
     if (y < 0) y = 0;
+    else if (y > VBE->y_resolution) x = VBE->y_resolution;
 }
