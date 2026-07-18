@@ -1,2 +1,4 @@
 boot/*.img
-bin/** */
+boot/bin/**
+*.img
+*.md
