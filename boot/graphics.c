@@ -2,10 +2,6 @@
 
 int rgb(int r, int g, int b)
 {
-    r = (int)(r / 3);
-    g = (int)(g / 2);
-    b = (int)(b / 3);
-
     return r << 11 | g << 5 | b;
 }
 
@@ -13,8 +9,10 @@ int rgb(int r, int g, int b)
 void Draw(int x, int y, int r, int g, int b)
 {
     VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
+    unsigned short* buffer = (unsigned short*) ScreenBufferAddress;
+
     int index = y * VBE->x_resolution + x;
-    *((unsigned short*)VBE->screen_ptr + index) = rgb(r, g, b);
+    *(buffer + index) = rgb(r, g, b);
 }
 
 void ClearScreen(int r, int g, int b)
@@ -57,6 +55,44 @@ void DrawCharacter(int (*f)(int, int), int font_width, int font_height, char cha
             }
 
             shift -= 1;
+        }
+    }
+}
+
+void DrawString(int (*f)(int, int), int font_width, int font_height, char* string, int x, int y, int r, int g, int b)
+{
+    int i = 0, j = 0;
+
+    for (int k = 0; *(string + k) != 0; k++)
+    {
+        if (*(string + k) != '\n')
+        {
+            DrawCharacter(f, font_width, font_height, *(string + k), x + i, y + j, r, g, b);
+        }
+
+        i += font_width;
+        
+        if (*(string + k) == '\n')
+        {
+            i = 0; 
+            j += font_height;
+        }
+
+    }
+}
+
+void Flush()
+{
+    VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
+    unsigned short* buffer = (unsigned short*) ScreenBufferAddress;
+    int index;
+
+    for (int y = 0; y < VBE->y_resolution; y++)
+    {
+        for (int x = 0; x < VBE->x_resolution; x++)
+        {   
+            int index = y * VBE->x_resolution + x;
+            *((unsigned short*)VBE->screen_ptr + index) = *(buffer + index);
         }
     }
 }
