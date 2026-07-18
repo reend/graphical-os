@@ -41,7 +41,6 @@ int start()
 
         DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBufferPointer, 100, 100, 0, 0, 0);
 
-        // DrawRect(x, y, 10, 10, 0, 0, 0);
         DrawMouse(x, y, 16, 100.0 / 255.0 * 32, 100.0 / 255.0 * 16);
 
         Flush();
