@@ -2,46 +2,16 @@
 [bits 16]
  
 section .code
- 
-.init:
-    mov eax, 0xb800
-    mov es, eax
-    mov eax, 0
-    mov ebx, 0
-    mov ecx, 0
-    mov dl, 0
- 
-.clear:
-    mov byte [es:eax], 0
-    inc eax
-    mov byte [es:eax], 0xB0
-    inc eax
-    cmp eax, 2 * 25 * 80
-    jl .clear
- 
-mov eax, welcome
-mov ecx, 0 * 2 * 80
-call .print
-
-jmp .switch
- 
- 
-.print:
-    mov ebx, 0
-.print_main:
-    mov dl, byte [eax + ebx]
-    cmp dl, 0
-    je .print_end
-    mov byte [es:ecx], dl
-    inc ebx
-    inc ecx
-    inc ecx
-    jmp .print_main
- 
-.print_end:
-    ret
 
 .switch:
+    mov bx, 0x1000
+    mov ah, 0x02
+    mov al, 30
+    mov ch, 0x00
+    mov dh, 0x00
+    mov cl, 0x02
+    int 0x13
+
     cli ; turn of interrupts
     lgdt [gdt_descriptor] ; load gdt table
 
@@ -49,7 +19,7 @@ jmp .switch
     or eax, 0x1
     mov cr0, eax ; make a switch to protected mode
 
-    jmp protected_start
+    jmp code_seg:protected_start
  
 welcome: db 'Welcome to SaphireOS.', 0
  
@@ -66,6 +36,7 @@ protected_start:
     mov ebp, 0x90000
     mov esp, ebp
 
+    call 0x1000
     jmp $
 
 gdt_begin:
@@ -91,7 +62,7 @@ gdt_descriptor:
     dw gdt_end - gdt_begin - 1
     dd gdt_begin
 
-code_segment equ gdt_code_seg - gdt_begin
+code_seg equ gdt_code_seg - gdt_begin
 data_seg equ gdt_data_seg - gdt_begin
 
 times 510 - ($ - $$) db 0x00
