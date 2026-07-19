@@ -11,6 +11,9 @@ void Draw(int x, int y, int r, int g, int b)
     VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
     unsigned short* buffer = (unsigned short*) ScreenBufferAddress;
 
+    if (x < 0 || x >= VBE->x_resolution || y < 0 || y >= VBE->y_resolution)
+        return;
+
     int index = y * VBE->x_resolution + x;
     *(buffer + index) = rgb(r, g, b);
 }

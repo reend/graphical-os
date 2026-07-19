@@ -7,11 +7,13 @@
 #define task_param_length 10
 #define TASK_MAX_PRIORITY 5
 
-#define IPARAM_X    0
-#define IPARAM_Y    1
-#define IPARAM_W    2
-#define IPARAM_H    3
-#define IPARAM_DRAG 9
+#define IPARAM_X       0
+#define IPARAM_Y       1
+#define IPARAM_W       2
+#define IPARAM_H       3
+#define IPARAM_GRAB_DX 4
+#define IPARAM_GRAB_DY 5
+#define IPARAM_DRAG    9
 
 struct Task
 {

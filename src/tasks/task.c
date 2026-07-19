@@ -39,7 +39,11 @@ void CloseTask(int taskId)
 {
     for (int i = taskId; i < TasksLength - 1; i++)
     {
-        tasks[i] = tasks[i+1];
+        tasks[i] = tasks[i + 1];
+        tasks[i].taskId = i;
+
+        for (int p = 0; p < task_param_length; p++)
+            iparams[i * task_param_length + p] = iparams[(i + 1) * task_param_length + p];
     }
 
     TasksLength--;

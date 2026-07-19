@@ -33,7 +33,7 @@ int HandleKeyboardTask(int taskId)
         backspace_pressed = FALSE;
         Scancode = -1;
     } 
-    else if (character != '\0')
+    else if (character != '\0' && *characterBufferLength < TASK_BUFFER_SIZE - 1)
     {
      characterBuffer[*characterBufferLength] = character;
      characterBuffer[*characterBufferLength + 1] = '\0';
@@ -56,7 +56,9 @@ int TestGraphicalElementsTask(int taskId)
             0, 
             0, 
             0,
-            &iparams[taskId * task_param_length + IPARAM_DRAG]
+            &iparams[taskId * task_param_length + IPARAM_DRAG],
+            &iparams[taskId * task_param_length + IPARAM_GRAB_DX],
+            &iparams[taskId * task_param_length + IPARAM_GRAB_DY]
         ) == 1)
         {
             CloseTask(taskId);

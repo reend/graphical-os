@@ -8,11 +8,11 @@ int start()
 {
    VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
 
-   mx = VBE->x_resolution / 2;
-   my = VBE->y_resolution / 2;
-
    InitialiseMouse();
    InitialiseIDT();
+
+   mx = VBE->x_resolution / 2;
+   my = VBE->y_resolution / 2;
 
    RegisterTask(0, &ClearScreenTask);
 

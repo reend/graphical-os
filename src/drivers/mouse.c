@@ -45,8 +45,6 @@ unsigned char MouseRead() {
 void InitialiseMouse() {
     unsigned char status;
 
-    mx = 100;
-    my = 100;
     current_byte = 0;
     mouse_speed = 3;
 
@@ -109,8 +107,8 @@ void HandleMousePacket() {
     my -= change_y * mouse_speed;
 
     if (mx < 0) mx = 0;
-    else if (mx > VBE->x_resolution) mx = VBE->x_resolution;
+    else if (mx >= VBE->x_resolution) mx = VBE->x_resolution - 1;
 
     if (my < 0) my = 0;
-    else if (my > VBE->y_resolution) mx = VBE->y_resolution;
+    else if (my >= VBE->y_resolution) my = VBE->y_resolution - 1;
 }
