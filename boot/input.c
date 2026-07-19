@@ -1,7 +1,7 @@
 
 #include <stdint.h>
 
-volatile int x, y;
+volatile int mx, my;
 volatile int left_clicked, right_clicked, middle_clicked;
 volatile int current_byte;
 volatile uint8_t bytes[4];
@@ -152,8 +152,8 @@ unsigned char MouseRead() {
 void InitialiseMouse() {
     unsigned char status;
 
-    x = 100;
-    y = 100;
+    mx = 100;
+    my = 100;
     current_byte = 0;
     mouse_speed = 3;
 
@@ -212,14 +212,14 @@ void HandleMousePacket() {
     right_clicked = status & right_click;
     middle_clicked = status & middle_click;
 
-    x += change_x * mouse_speed;
-    y -= change_y * mouse_speed;
+    mx += change_x * mouse_speed;
+    my -= change_y * mouse_speed;
 
-    if (x < 0) x = 0;
-    else if (x > VBE->x_resolution) x = VBE->x_resolution;
+    if (mx < 0) mx = 0;
+    else if (mx > VBE->x_resolution) mx = VBE->x_resolution;
 
-    if (y < 0) y = 0;
-    else if (y > VBE->y_resolution) x = VBE->y_resolution;
+    if (my < 0) my = 0;
+    else if (my > VBE->y_resolution) mx = VBE->y_resolution;
 }
 
 int shift_pressed = FALSE;

@@ -4,8 +4,8 @@ int start()
 {
    VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
 
-   x = VBE->x_resolution / 2;
-   y = VBE->y_resolution / 2;
+   mx = VBE->x_resolution / 2;
+   my = VBE->y_resolution / 2;
 
    char str1[] = "Welcome to Graph Operation System!";
    char *p = str1;
@@ -27,12 +27,21 @@ int start()
 
    tasks[TasksLength].priority = 0;
    tasks[TasksLength].taskId = TasksLength;
-   tasks[TasksLength].function = &DrawMouseTask;
+   tasks[TasksLength].function = &TestGraphicalElementsTask;
+   iparams[TasksLength * task_param_length + 0] = 10;
+   iparams[TasksLength * task_param_length + 1] = 10;
+   iparams[TasksLength * task_param_length + 2] = 300;
+   iparams[TasksLength * task_param_length + 3] = 300;
+   TasksLength++;
+   
+   tasks[TasksLength].priority = 0;
+   tasks[TasksLength].taskId = TasksLength;
+   tasks[TasksLength].function = &HandleKeyboardTask;
    TasksLength++;
 
    tasks[TasksLength].priority = 0;
    tasks[TasksLength].taskId = TasksLength;
-   tasks[TasksLength].function = &HandleKeyboardTask;
+   tasks[TasksLength].function = &DrawMouseTask;
    TasksLength++;
 
    while(1)
