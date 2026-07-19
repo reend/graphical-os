@@ -33,6 +33,16 @@ void ProcessTasks()
     }
 }
 
+void CloseTask(int taskId)
+{
+    for (int i = taskId; i < TasksLength - 1; i++)
+    {
+        tasks[i] = tasks[i+1];
+    }
+
+    TasksLEngth--;
+}
+
 int ClearScreenTask(int taskId)
 {
     ClearScreen(181.0f / 255.0f * 16.0f, 232.0f / 255.0f * 32.0f, 255.0f / 255.0f * 16.0f);
@@ -81,7 +91,7 @@ int TestGraphicalElementsTask(int taskId)
     // iparams: 0 - x, 1 - y, 2 - width, 3 - height, 9 - mouse click held down flag
     if (iparams[taskId * task_param_length + 9] == TRUE || 
         (left_clicked == TRUE && mx > iparams[taskId * task_param_length + 0] &&
-        mx < iparams[taskId * task_param_length + 0] + iparams[taskId * task_param_length + 2] &&
+        mx < iparams[taskId * task_param_length + 0] + iparams[taskId * task_param_length + 2] - 30 &&
         my > iparams[taskId * task_param_length + 1] && 
         my < iparams[taskId * task_param_length + 1] + 20))
         {
@@ -91,7 +101,7 @@ int TestGraphicalElementsTask(int taskId)
             iparams[taskId * task_param_length + 1] = my - 10;
         } 
 
-        DrawWindow(
+        if (DrawWindow(
             iparams[taskId * task_param_length + 0],
             iparams[taskId * task_param_length + 1],
             iparams[taskId * task_param_length + 2],
@@ -99,7 +109,10 @@ int TestGraphicalElementsTask(int taskId)
             0, 
             0, 
             0
-        );
+        ) == 1)
+        {
+            CloseTask(tasksId);
+        }
 
         return 0;
 }
