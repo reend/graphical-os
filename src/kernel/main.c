@@ -23,6 +23,7 @@ int start()
    iparams[window * task_param_length + IPARAM_H] = 300;
 
    RegisterTask(0, &HandleKeyboardTask);
+   RegisterTask(0, &WelcomeTask);
    RegisterTask(0, &DrawMouseTask);
 
    while(1)

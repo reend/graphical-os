@@ -46,6 +46,22 @@ int HandleKeyboardTask(int taskId)
     return 0;
 }
 
+int WelcomeTask(int taskId)
+{
+    VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
+    char* text = "Welcome to SaphireOS";
+
+    int len = 0;
+    while (text[len] != '\0') len++;
+
+    int x = (VBE->x_resolution - len * font_arial_width) / 2;
+    int y = (VBE->y_resolution - font_arial_height) / 2;
+
+    DrawString(getArialCharacter, font_arial_width, font_arial_height, text, x, y, COLOR_TEXT_R, COLOR_TEXT_G, COLOR_TEXT_B);
+
+    return 0;
+}
+
 int TestGraphicalElementsTask(int taskId)
 {
         if (DrawWindow(

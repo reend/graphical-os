@@ -31,7 +31,7 @@ $(BUILD)/kernel.img: $(KERNEL_ENTRY) $(OBJ) linker.ld
 	$(LD) $(LDFLAGS) -o $@ $(KERNEL_ENTRY) $(OBJ)
 
 $(BUILD)/kernel.bin: $(BUILD)/kernel.img
-	$(OBJCOPY) -O binary -j .text $< $@
+	$(OBJCOPY) -O binary $< $@
 
 os.img: $(BOOT_BIN) $(BUILD)/kernel.bin
 	cat $(BOOT_BIN) $(BUILD)/kernel.bin > os.img

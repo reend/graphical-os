@@ -36,5 +36,6 @@ int ClearScreenTask(int taskId);
 int DrawMouseTask(int taskId);
 int HandleKeyboardTask(int taskId);
 int TestGraphicalElementsTask(int taskId);
+int WelcomeTask(int taskId);
 
 #endif
