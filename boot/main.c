@@ -21,18 +21,18 @@ int start()
    InitialiseIDT();
 
    tasks[TasksLength].priority = 0;
-   tasks[TasksLength].type = task_type_void;
-   tasks[TasksLength].function_void = &ClearScreenTask;
+   tasks[TasksLength].taskId = TasksLength;
+   tasks[TasksLength].function = &ClearScreenTask;
    TasksLength++;
 
    tasks[TasksLength].priority = 0;
-   tasks[TasksLength].type = task_type_void;
-   tasks[TasksLength].function_void = &DrawMouseTask;
+   tasks[TasksLength].taskId = TasksLength;
+   tasks[TasksLength].function = &DrawMouseTask;
    TasksLength++;
 
    tasks[TasksLength].priority = 0;
-   tasks[TasksLength].type = task_type_string_buffer;
-   tasks[TasksLength].function_string_buffer = &HandleKeyboardTask;
+   tasks[TasksLength].taskId = TasksLength;
+   tasks[TasksLength].function = &HandleKeyboardTask;
    TasksLength++;
 
    while(1)
