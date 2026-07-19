@@ -11,35 +11,19 @@ int start()
    mx = VBE->x_resolution / 2;
    my = VBE->y_resolution / 2;
 
-   base = (unsigned int)&isr1;
-   base12 = (unsigned int)&isr12;
-
    InitialiseMouse();
    InitialiseIDT();
 
-   tasks[TasksLength].priority = 0;
-   tasks[TasksLength].taskId = TasksLength;
-   tasks[TasksLength].function = &ClearScreenTask;
-   TasksLength++;
+   RegisterTask(0, &ClearScreenTask);
 
-   tasks[TasksLength].priority = 0;
-   tasks[TasksLength].taskId = TasksLength;
-   tasks[TasksLength].function = &TestGraphicalElementsTask;
-   iparams[TasksLength * task_param_length + 0] = 10;
-   iparams[TasksLength * task_param_length + 1] = 10;
-   iparams[TasksLength * task_param_length + 2] = 300;
-   iparams[TasksLength * task_param_length + 3] = 300;
-   TasksLength++;
-   
-   tasks[TasksLength].priority = 0;
-   tasks[TasksLength].taskId = TasksLength;
-   tasks[TasksLength].function = &HandleKeyboardTask;
-   TasksLength++;
+   int window = RegisterTask(0, &TestGraphicalElementsTask);
+   iparams[window * task_param_length + IPARAM_X] = 10;
+   iparams[window * task_param_length + IPARAM_Y] = 10;
+   iparams[window * task_param_length + IPARAM_W] = 300;
+   iparams[window * task_param_length + IPARAM_H] = 300;
 
-   tasks[TasksLength].priority = 0;
-   tasks[TasksLength].taskId = TasksLength;
-   tasks[TasksLength].function = &DrawMouseTask;
-   TasksLength++;
+   RegisterTask(0, &HandleKeyboardTask);
+   RegisterTask(0, &DrawMouseTask);
 
    while(1)
    {

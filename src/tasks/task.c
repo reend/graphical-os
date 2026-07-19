@@ -5,6 +5,19 @@ int TasksLength = 0;
 struct Task tasks[MAX_TASKS];
 int iparams[TASK_PARAMS_SIZE] = {10};
 
+int RegisterTask(int priority, int (*function)(int))
+{
+    int id = TasksLength;
+
+    tasks[id].priority = priority;
+    tasks[id].taskId = id;
+    tasks[id].function = function;
+
+    TasksLength++;
+
+    return id;
+}
+
 void ProcessTasks()
 {
     int priority = 0;

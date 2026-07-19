@@ -7,6 +7,12 @@
 #define task_param_length 10
 #define TASK_MAX_PRIORITY 5
 
+#define IPARAM_X    0
+#define IPARAM_Y    1
+#define IPARAM_W    2
+#define IPARAM_H    3
+#define IPARAM_DRAG 9
+
 struct Task
 {
     int priority;
@@ -20,6 +26,7 @@ extern struct Task tasks[MAX_TASKS];
 extern int TasksLength;
 extern int iparams[TASK_PARAMS_SIZE];
 
+int RegisterTask(int priority, int (*function)(int));
 void ProcessTasks();
 void CloseTask(int taskId);
 

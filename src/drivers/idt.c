@@ -3,9 +3,12 @@
 #include "ports.h"
 
 struct IDTElement _idt[IDT_ENTRIES];
-unsigned int base, base12;
+static unsigned int base, base12;
 
 void InitialiseIDT() {
+    base = (unsigned int)&isr1;
+    base12 = (unsigned int)&isr12;
+
     _idt[1].lower = (base & 0xffff);
     _idt[1].higher = (base >> 16) & 0xffff;
     _idt[1].selector = KERNEL_CODE_SELECTOR;

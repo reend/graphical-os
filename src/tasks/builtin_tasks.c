@@ -49,14 +49,14 @@ int HandleKeyboardTask(int taskId)
 int TestGraphicalElementsTask(int taskId)
 {
         if (DrawWindow(
-            &iparams[taskId * task_param_length + 0],
-            &iparams[taskId * task_param_length + 1],
-            &iparams[taskId * task_param_length + 2],
-            &iparams[taskId * task_param_length + 3],
+            &iparams[taskId * task_param_length + IPARAM_X],
+            &iparams[taskId * task_param_length + IPARAM_Y],
+            &iparams[taskId * task_param_length + IPARAM_W],
+            &iparams[taskId * task_param_length + IPARAM_H],
             0, 
             0, 
             0,
-            &iparams[taskId * task_param_length + 9]
+            &iparams[taskId * task_param_length + IPARAM_DRAG]
         ) == 1)
         {
             CloseTask(taskId);

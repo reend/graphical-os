@@ -14,7 +14,6 @@ struct IDTElement {
 };
 
 extern struct IDTElement _idt[IDT_ENTRIES];
-extern unsigned int base, base12;
 extern unsigned int isr1, isr12;
 extern void LoadIDT();
 
