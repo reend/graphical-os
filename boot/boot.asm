@@ -22,7 +22,7 @@ section .code
 
     mov bx, 0x1000
     mov ah, 0x02
-    mov al, 30
+    mov al, 50
     mov ch, 0x00
     mov dh, 0x00
     mov cl, 0x02
