@@ -1,3 +1,5 @@
+#include "font.h"
+
 int getArialCharacter(int index, int y) {
 unsigned int characters_arial_0[][150] = {	{
 		0b0000000000,

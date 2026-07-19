@@ -1,0 +1,27 @@
+#ifndef COLORS_H
+#define COLORS_H
+
+#define RGB565_RED_SHIFT   11
+#define RGB565_GREEN_SHIFT 5
+
+#define COLOR_DESKTOP_R (181.0f / 255.0f * 16.0f)
+#define COLOR_DESKTOP_G (232.0f / 255.0f * 32.0f)
+#define COLOR_DESKTOP_B (255.0f / 255.0f * 16.0f)
+
+#define COLOR_CURSOR_R 16
+#define COLOR_CURSOR_G (100.0 / 255.0 * 32)
+#define COLOR_CURSOR_B (100.0 / 255.0 * 16)
+
+#define COLOR_TITLEBAR_R 16
+#define COLOR_TITLEBAR_G 32
+#define COLOR_TITLEBAR_B 16
+
+#define COLOR_TEXT_R 16
+#define COLOR_TEXT_G 32
+#define COLOR_TEXT_B 16
+
+#define COLOR_CLOSE_BTN_R 16
+#define COLOR_CLOSE_BTN_G 0
+#define COLOR_CLOSE_BTN_B 0
+
+#endif

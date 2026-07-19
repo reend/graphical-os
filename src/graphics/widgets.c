@@ -1,3 +1,11 @@
+#include "widgets.h"
+#include "graphics.h"
+#include "text.h"
+#include "font.h"
+#include "mouse.h"
+#include "colors.h"
+#include "types.h"
+
 int DrawCircleButton(int x, int y, int radius, int r, int g, int b)
 {
     if ((mx - x)*(mx - x) + (my - y)*(my - y) <= radius*radius)
@@ -45,12 +53,11 @@ int DrawWindow(int* x, int* y, int* width, int* height, int r, int g, int b, int
        *mouse_held = FALSE;
     }
 
-    // iparams: 0 - x, 1 - y, 2 - width, 3 - height, 9 - mouse click held down flag
     if (*mouse_held == TRUE || 
         (left_clicked == TRUE && mx > *x &&
         mx < *x + *width - 30 &&
         my > *y && 
-        my < *y + 20))
+        my < *y + WINDOW_TITLEBAR_H))
         {
             left_clicked = FALSE;
             *mouse_held = TRUE;
@@ -58,8 +65,8 @@ int DrawWindow(int* x, int* y, int* width, int* height, int r, int g, int b, int
             *y = my - 10;
         } 
 
-    DrawRect(*x, *y, *width, 20, 16, 32, 16);
-    DrawRect(*x, *y + 20, *width, *height, r, g, b);
+    DrawRect(*x, *y, *width, WINDOW_TITLEBAR_H, COLOR_TITLEBAR_R, COLOR_TITLEBAR_G, COLOR_TITLEBAR_B);
+    DrawRect(*x, *y + WINDOW_TITLEBAR_H, *width, *height, r, g, b);
 
-    return DrawCircleButton(*x + *width - 10, *y + 10, 8, 16, 0, 0);
+    return DrawCircleButton(*x + *width - 10, *y + 10, WINDOW_CLOSE_BTN_RADIUS, COLOR_CLOSE_BTN_R, COLOR_CLOSE_BTN_G, COLOR_CLOSE_BTN_B);
 }

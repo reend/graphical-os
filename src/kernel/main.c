@@ -1,4 +1,8 @@
+#include "vbe.h"
 #include "graphics.h"
+#include "idt.h"
+#include "mouse.h"
+#include "task.h"
 
 int start() 
 {
@@ -6,13 +10,6 @@ int start()
 
    mx = VBE->x_resolution / 2;
    my = VBE->y_resolution / 2;
-
-   char str1[] = "Welcome to Graph Operation System!";
-   char *p = str1;
-
-   char characterBuffer[1000] = "\0";
-   char* characterBufferPointer = characterBuffer;
-   int characterBufferLength = 0;
 
    base = (unsigned int)&isr1;
    base12 = (unsigned int)&isr12;

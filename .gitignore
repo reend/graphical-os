@@ -1,4 +1,3 @@
-boot/*.img
-boot/bin/**
+build/
 *.img
 *.md
