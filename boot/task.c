@@ -40,7 +40,7 @@ void CloseTask(int taskId)
         tasks[i] = tasks[i+1];
     }
 
-    TasksLEngth--;
+    TasksLength--;
 }
 
 int ClearScreenTask(int taskId)
@@ -111,7 +111,7 @@ int TestGraphicalElementsTask(int taskId)
             0
         ) == 1)
         {
-            CloseTask(tasksId);
+            CloseTask(taskId);
         }
 
         return 0;
